@@ -22,7 +22,7 @@ const request = async ({ url, method, params }: RequestProps) => {
   return;
 };
 
-export const login = async ({ id, password }: LoginProps) =>
+export const login = ({ id, password }: LoginProps) =>
   request({
     url: '/login',
     method: 'post',
@@ -30,6 +30,12 @@ export const login = async ({ id, password }: LoginProps) =>
       id,
       password,
     },
+  });
+
+export const verificationUser = (id: string) =>
+  request({
+    url: `/users/${id}`,
+    method: 'get',
   });
 
 interface Response {
@@ -40,5 +46,5 @@ interface Response {
 interface RequestProps {
   url: string;
   method: string;
-  params: object;
+  params?: object;
 }
