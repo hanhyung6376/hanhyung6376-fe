@@ -19,7 +19,7 @@ const request = async ({ url, method, params }: RequestProps) => {
     result.error = e as unknown as AxiosError;
   }
 
-  return;
+  return result;
 };
 
 export const login = ({ id, password }: LoginProps) =>
