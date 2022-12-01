@@ -1,7 +1,7 @@
 import { atom } from 'recoil';
 
 export const userAtom = atom<UserType>({
-  key: 'register',
+  key: 'user',
   default: {
     name: null,
     login: false,
