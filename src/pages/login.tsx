@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import useInput from 'hooks/useInput';
 import LoginInput from '../components/LoginInput';
 import useAuth from '../hooks/useAuth';
+import { checkId, checkPassword } from 'utilities/auth';
 
 const LoginPage: NextPage = () => {
   const { onLogin } = useAuth();
@@ -20,15 +21,10 @@ const LoginPage: NextPage = () => {
 
   const checkUserId = () => {
     const { id } = user;
-    const regExp = /^[A-Za-z0-9]*$/;
-    if (id.length < 5 || id.length > 30) {
-      setError({ ...error, id: true });
-      return;
-    }
+    const result = checkId(id);
 
-    if (!regExp.test(id)) {
+    if (!result) {
       setError({ ...error, id: true });
-      return;
     }
 
     setError({ ...error, id: false });
@@ -36,20 +32,10 @@ const LoginPage: NextPage = () => {
 
   const checkUserPassword = () => {
     const { password } = user;
-    const hasSmall = /[a-z]/;
-    const hasLarge = /[A-Z]/;
-    const hasNumber = /[0-9]/;
-
-    const result = hasSmall.test(password) && hasLarge.test(password) && hasNumber.test(password);
-
-    if (password.length < 8 || password.length > 30) {
-      setError({ ...error, password: true });
-      return;
-    }
+    const result = checkPassword(password);
 
     if (!result) {
       setError({ ...error, password: true });
-      return;
     }
 
     setError({ ...error, password: false });
@@ -57,7 +43,7 @@ const LoginPage: NextPage = () => {
 
   const onClick = async () => {
     const { id, password } = user;
-    onLogin({ id, password });
+    await onLogin({ id, password });
   };
 
   useEffect(() => {
