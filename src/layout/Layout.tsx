@@ -11,17 +11,16 @@ const Layout: FC<PropsWithChildren<any>> = ({ children }) => {
         <Link href='/'>
           <Title>HAUS</Title>
         </Link>
-        <Link href='/login'>
-          {user.login ? (
-            <>
-              <p>{user.name}</p>
-              <br />
-              <p>logout</p>
-            </>
-          ) : (
+        {user.login ? (
+          <Wrapper>
+            <p>{user.name}</p>
+            <p onClick={onLogout}>logout</p>
+          </Wrapper>
+        ) : (
+          <Link href='/login'>
             <p>login</p>
-          )}
-        </Link>
+          </Link>
+        )}
       </Header>
       {children}
     </>
@@ -39,4 +38,10 @@ const Header = styled.div`
 
 const Title = styled.a`
   font-size: 48px;
+`;
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  text-align: right;
 `;
