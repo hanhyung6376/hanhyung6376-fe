@@ -3,12 +3,12 @@ import { atom } from 'recoil';
 export const userAtom = atom<UserType>({
   key: 'register',
   default: {
-    id: null,
+    name: null,
     login: false,
   },
 });
 
 interface UserType {
-  id: string | null;
+  name: string | null;
   login: boolean;
 }
