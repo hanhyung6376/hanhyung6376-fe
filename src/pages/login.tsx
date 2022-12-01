@@ -1,14 +1,13 @@
 import Link from 'next/link';
 import type { NextPage } from 'next';
-import { useRouter } from 'next/router';
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import useInput from 'hooks/useInput';
 import LoginInput from '../components/LoginInput';
-import * as api from 'api';
+import useAuth from '../hooks/useAuth';
 
 const LoginPage: NextPage = () => {
-  const router = useRouter();
+  const { onLogin } = useAuth();
   const [login, setLogin] = useState(false);
   const [user, , onChange] = useInput({
     id: '',
@@ -58,14 +57,11 @@ const LoginPage: NextPage = () => {
 
   const onClick = async () => {
     const { id, password } = user;
-    const res = await api.login({ id, password });
-    if (res) {
-      router.push('/');
-    }
+    onLogin({ id, password });
   };
 
   useEffect(() => {
-    if (!error.id && !error.password && user.id && user.password) {
+    if (!error.id && !error.password && user.id.length > 5 && user.password.length > 8) {
       setLogin(true);
       return;
     }
