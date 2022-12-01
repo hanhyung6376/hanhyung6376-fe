@@ -2,10 +2,8 @@ import Link from 'next/link';
 import type { NextPage } from 'next';
 import React from 'react';
 import styled from 'styled-components';
-import useAuth from 'hooks/useAuth';
 
 const HomePage: NextPage = () => {
-  const { user, onLogout } = useAuth();
   return (
     <Container>
       <Link href='/pagination?page=1'>
