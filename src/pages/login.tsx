@@ -17,6 +17,7 @@ const LoginPage: NextPage = () => {
   const [error, setError] = useState({
     id: false,
     password: false,
+    login: false,
   });
 
   const checkUserId = () => {
@@ -25,6 +26,7 @@ const LoginPage: NextPage = () => {
 
     if (!result) {
       setError({ ...error, id: true });
+      return;
     }
 
     setError({ ...error, id: false });
@@ -36,6 +38,7 @@ const LoginPage: NextPage = () => {
 
     if (!result) {
       setError({ ...error, password: true });
+      return;
     }
 
     setError({ ...error, password: false });
@@ -43,7 +46,10 @@ const LoginPage: NextPage = () => {
 
   const onClick = async () => {
     const { id, password } = user;
-    await onLogin({ id, password });
+    const res = await onLogin({ id, password });
+    if (!res) {
+      setError({ ...error, login: true });
+    }
   };
 
   useEffect(() => {
@@ -75,6 +81,7 @@ const LoginPage: NextPage = () => {
           onBlur={checkUserId}
           error={error.id}
           message='올바른 아이디 형식으로 입력해주세요.'
+          margin
         />
         <LoginInput
           title='비밀번호'
@@ -89,6 +96,7 @@ const LoginPage: NextPage = () => {
         <LoginButton disabled={!login} onClick={onClick}>
           로그인
         </LoginButton>
+        {error.login ? <Warning>로그인 실패</Warning> : null}
       </Form>
     </>
   );
@@ -124,4 +132,12 @@ const LoginButton = styled.button`
   &:disabled {
     background-color: #e2e2ea;
   }
+`;
+
+const Warning = styled.div`
+  text-align: center;
+  margin-top: 8px;
+  font-weight: 400;
+  font-size: 13px;
+  color: #ed4e5c;
 `;
