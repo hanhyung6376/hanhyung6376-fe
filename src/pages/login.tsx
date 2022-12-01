@@ -47,7 +47,8 @@ const LoginPage: NextPage = () => {
   };
 
   useEffect(() => {
-    if (!error.id && !error.password && user.id.length > 5 && user.password.length > 8) {
+    const { id, password } = user;
+    if (!error.id && !error.password && checkId(id) && checkPassword(password)) {
       setLogin(true);
       return;
     }
