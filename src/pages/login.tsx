@@ -1,11 +1,14 @@
 import Link from 'next/link';
 import type { NextPage } from 'next';
+import { useRouter } from 'next/router';
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import useInput from 'hooks/useInput';
 import LoginInput from '../components/LoginInput';
+import * as api from 'api';
 
 const LoginPage: NextPage = () => {
+  const router = useRouter();
   const [login, setLogin] = useState(false);
   const [user, , onChange] = useInput({
     id: '',
@@ -53,6 +56,14 @@ const LoginPage: NextPage = () => {
     setError({ ...error, password: false });
   };
 
+  const onClick = async () => {
+    const { id, password } = user;
+    const res = await api.login({ id, password });
+    if (res) {
+      router.push('/');
+    }
+  };
+
   useEffect(() => {
     if (!error.id && !error.password && user.id && user.password) {
       setLogin(true);
@@ -92,7 +103,9 @@ const LoginPage: NextPage = () => {
           error={error.password}
           message='올바른 비밀번호 형식으로 입력해주세요.'
         />
-        <LoginButton disabled={login ? false : true}>로그인</LoginButton>
+        <LoginButton disabled={!login} onClick={onClick}>
+          로그인
+        </LoginButton>
       </Form>
     </>
   );
