@@ -1,11 +1,44 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { LoginProps } from '../types/auth';
 
-export const login = async ({ id, password }: LoginProps) => {
+const request = async ({ url, method, params }: RequestProps) => {
+  const result: Response = {
+    data: null,
+    error: null,
+  };
+
   try {
-    const res = await axios.post('/login', { id, password });
-    return res.data;
+    const res = await axios({
+      url,
+      method,
+      data: params,
+    });
+
+    result.data = res.data;
   } catch (e) {
-    console.warn(e);
+    result.error = e as unknown as AxiosError;
   }
+
+  return;
 };
+
+export const login = async ({ id, password }: LoginProps) =>
+  request({
+    url: '/login',
+    method: 'post',
+    params: {
+      id,
+      password,
+    },
+  });
+
+interface Response {
+  data: any;
+  error: null | AxiosError;
+}
+
+interface RequestProps {
+  url: string;
+  method: string;
+  params: object;
+}
