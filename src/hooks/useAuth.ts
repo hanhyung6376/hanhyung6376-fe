@@ -9,14 +9,18 @@ const useAuth = () => {
   const [user, setUser] = useRecoilState(userAtom);
 
   const onLogin = async ({ id, password }: LoginProps) => {
-    const res = await api.login({ id, password });
+    const verification = await api.verificationUser(id);
 
-    if (res) {
+    if (verification.error) {
+      return;
+    }
+    const login = await api.login({ id, password });
+    if (login.data) {
       const {
         data: {
           user: { NAME },
         },
-      } = res;
+      } = login.data;
       setUser({ name: NAME, login: true });
       router.push('/');
     }
