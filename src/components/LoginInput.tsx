@@ -2,15 +2,15 @@ import React, { FC } from 'react';
 import styled from 'styled-components';
 
 const LoginInput: FC<Props> = (props) => {
-  const { title, type, value, onChange, onBlur, error, message } = props;
+  const { title, type, value, onChange, name, onBlur, error, message, margin } = props;
   return (
-    <>
+    <div style={{ marginBottom: margin ? '16px' : undefined }}>
       <Text>{title}</Text>
       <TextBox>
-        <TextInput type={type} value={value} onChange={onChange} onBlur={onBlur} />
+        <TextInput type={type} name={name} value={value} onChange={onChange} onBlur={onBlur} />
       </TextBox>
       {error ? <Warning>{message}</Warning> : null}
-    </>
+    </div>
   );
 };
 
@@ -20,10 +20,12 @@ interface Props {
   title: string;
   type: string;
   value: string;
+  name: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onBlur: () => void;
   error: boolean;
   message: string;
+  margin?: boolean;
 }
 
 const Text = styled.p`
