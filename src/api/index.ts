@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { LoginProps } from '../types/auth';
 
 export const login = async ({ id, password }: LoginProps) => {
   try {
@@ -8,8 +9,3 @@ export const login = async ({ id, password }: LoginProps) => {
     console.warn(e);
   }
 };
-
-interface LoginProps {
-  id: string;
-  password: string;
-}
