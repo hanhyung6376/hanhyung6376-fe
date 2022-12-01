@@ -19,15 +19,19 @@ const useAuth = () => {
       const {
         data: {
           user: { NAME },
+          accessToken,
         },
       } = login.data;
-      setUser({ name: NAME, login: true });
+      setUser({ name: NAME, login: true, accessToken });
+      sessionStorage.setItem('auth', JSON.stringify({ accessToken, name: NAME }));
       router.push('/');
+      return true;
     }
   };
 
   const onLogout = () => {
-    setUser({ name: null, login: false });
+    setUser({ name: null, login: false, accessToken: null });
+    sessionStorage.removeItem('auth');
   };
 
   return { user, onLogin, onLogout };
