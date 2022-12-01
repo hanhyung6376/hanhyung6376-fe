@@ -62,58 +62,37 @@ const LoginPage: NextPage = () => {
   }, [error, user]);
 
   return (
-    <>
-      <Header>
-        <Link href='/'>
-          <Title>HAUS</Title>
-        </Link>
-        <Link href='/login'>
-          <p>login</p>
-        </Link>
-      </Header>
-      <Form>
-        <LoginInput
-          title='야이디'
-          type='text'
-          name='id'
-          value={user.id}
-          onChange={onChange}
-          onBlur={checkUserId}
-          error={error.id}
-          message='올바른 아이디 형식으로 입력해주세요.'
-          margin
-        />
-        <LoginInput
-          title='비밀번호'
-          type='password'
-          name='password'
-          value={user.password}
-          onChange={onChange}
-          onBlur={checkUserPassword}
-          error={error.password}
-          message='올바른 비밀번호 형식으로 입력해주세요.'
-        />
-        <LoginButton disabled={!login} onClick={onClick}>
-          로그인
-        </LoginButton>
-        {error.login ? <Warning>로그인 실패</Warning> : null}
-      </Form>
-    </>
+    <Form>
+      <LoginInput
+        title='야이디'
+        type='text'
+        name='id'
+        value={user.id}
+        onChange={onChange}
+        onBlur={checkUserId}
+        error={error.id}
+        message='올바른 아이디 형식으로 입력해주세요.'
+        margin
+      />
+      <LoginInput
+        title='비밀번호'
+        type='password'
+        name='password'
+        value={user.password}
+        onChange={onChange}
+        onBlur={checkUserPassword}
+        error={error.password}
+        message='올바른 비밀번호 형식으로 입력해주세요.'
+      />
+      <LoginButton disabled={!login} onClick={onClick}>
+        로그인
+      </LoginButton>
+      {error.login ? <Warning>로그인 실패</Warning> : null}
+    </Form>
   );
 };
 
 export default LoginPage;
-
-const Header = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px;
-`;
-
-const Title = styled.a`
-  font-size: 48px;
-`;
 
 const Form = styled.div`
   display: flex;

@@ -13,35 +13,14 @@ const PaginationPage: NextPage = () => {
   const { page } = router.query;
 
   return (
-    <>
-      <Header>
-        <Link href='/'>
-          <Title>HAUS</Title>
-        </Link>
-        <Link href='/login'>
-          <p>login</p>
-        </Link>
-      </Header>
-      <Container>
-        <ProductList products={products.slice(0, 10)} />
-        <Pagination />
-      </Container>
-    </>
+    <Container>
+      <ProductList products={products.slice(0, 10)} />
+      <Pagination />
+    </Container>
   );
 };
 
 export default PaginationPage;
-
-const Header = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px;
-`;
-
-const Title = styled.a`
-  font-size: 48px;
-`;
 
 const Container = styled.div`
   display: flex;
