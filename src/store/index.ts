@@ -10,6 +10,11 @@ export const userAtom = atom<UserType>({
   },
 });
 
+export const pageAtom = atom({
+  key: `page/${v1()}`,
+  default: 0,
+});
+
 interface UserType {
   name: string | null;
   accessToken: string | null;
