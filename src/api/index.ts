@@ -38,6 +38,18 @@ export const verificationUser = (id: string) =>
     method: 'get',
   });
 
+export const getProducts = ({ page, size }: ProductVariables) =>
+  request({
+    url: `/products?page=${page}&size=${size}`,
+    method: 'get',
+  });
+
+export const getProduct = (productId: string) =>
+  request({
+    url: `/products/${productId}`,
+    method: 'get',
+  });
+
 interface Response {
   data: any;
   error: null | AxiosError;
@@ -47,4 +59,9 @@ interface RequestProps {
   url: string;
   method: string;
   params?: object;
+}
+
+interface ProductVariables {
+  page: number;
+  size: number;
 }
