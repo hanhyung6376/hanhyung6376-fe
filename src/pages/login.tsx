@@ -2,15 +2,17 @@ import Link from 'next/link';
 import type { NextPage } from 'next';
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { useRouter } from 'next/router';
 import useInput from 'hooks/useInput';
 import LoginInput from '../components/LoginInput';
 import useAuth from '../hooks/useAuth';
 import { checkId, checkPassword } from 'utilities/auth';
 
 const LoginPage: NextPage = () => {
-  const { onLogin } = useAuth();
+  const { user, onLogin } = useAuth();
+  const router = useRouter();
   const [login, setLogin] = useState(false);
-  const [user, , onChange] = useInput({
+  const [input, , onChange] = useInput({
     id: '',
     password: '',
   });
@@ -21,7 +23,7 @@ const LoginPage: NextPage = () => {
   });
 
   const checkUserId = () => {
-    const { id } = user;
+    const { id } = input;
     const result = checkId(id);
 
     if (!result) {
@@ -33,7 +35,7 @@ const LoginPage: NextPage = () => {
   };
 
   const checkUserPassword = () => {
-    const { password } = user;
+    const { password } = input;
     const result = checkPassword(password);
 
     if (!result) {
@@ -45,7 +47,7 @@ const LoginPage: NextPage = () => {
   };
 
   const onClick = async () => {
-    const { id, password } = user;
+    const { id, password } = input;
     const res = await onLogin({ id, password });
     if (!res) {
       setError({ ...error, login: true });
@@ -53,13 +55,19 @@ const LoginPage: NextPage = () => {
   };
 
   useEffect(() => {
-    const { id, password } = user;
+    const { id, password } = input;
     if (!error.id && !error.password && checkId(id) && checkPassword(password)) {
       setLogin(true);
       return;
     }
     setLogin(false);
-  }, [error, user]);
+  }, [error, input]);
+
+  useEffect(() => {
+    if (user.login) {
+      router.push('/');
+    }
+  }, [user]);
 
   return (
     <Form>
@@ -67,7 +75,7 @@ const LoginPage: NextPage = () => {
         title='야이디'
         type='text'
         name='id'
-        value={user.id}
+        value={input.id}
         onChange={onChange}
         onBlur={checkUserId}
         error={error.id}
@@ -78,7 +86,7 @@ const LoginPage: NextPage = () => {
         title='비밀번호'
         type='password'
         name='password'
-        value={user.password}
+        value={input.password}
         onChange={onChange}
         onBlur={checkUserPassword}
         error={error.password}
