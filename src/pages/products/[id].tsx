@@ -1,18 +1,15 @@
 import type { NextPage, GetServerSideProps } from 'next';
 import React from 'react';
 import styled from 'styled-components';
+import Error from 'components/common/Error';
 import * as api from 'api';
-import products from '../../api/data/products.json';
-import { Product } from '../../types/product';
-import { numberFormatter } from '../../utilities/product';
+import products from 'api/data/products.json';
+import { Product } from 'types/product';
+import { numberFormatter } from 'utilities/product';
 
 const ProductDetailPage: NextPage<Props> = ({ thumbnail, name, price, error }) => {
   if (error) {
-    return (
-      <ErrorMessage>
-        <div>존재하지 않는 상품입니다.</div>
-      </ErrorMessage>
-    );
+    return <Error message='존재하지 않는 상풉니다.' />;
   }
   return (
     <>
