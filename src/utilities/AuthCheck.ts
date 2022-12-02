@@ -7,7 +7,6 @@ const AuthCheck = ({ children }: PropsWithChildren<any>) => {
 
   useEffect(() => {
     const user = sessionStorage.getItem('auth');
-    console.log(user);
     if (user) {
       const { accessToken, name } = JSON.parse(user);
       setUser({ accessToken, name, login: true });
