@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import { useRouter } from 'next/router';
 import ProductList from '../components/ProductList';
 import Pagination from '../components/Pagination';
-import usePagination from '../hooks/usePagination';
 import Error from 'components/common/Error';
 import { useRecoilState } from 'recoil';
 import { pageAtom } from '../store';
