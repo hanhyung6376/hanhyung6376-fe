@@ -8,7 +8,11 @@ import { numberFormatter } from '../../utilities/product';
 
 const ProductDetailPage: NextPage<Props> = ({ thumbnail, name, price, error }) => {
   if (error) {
-    return <p>존재하지 않는 상품입니다.</p>;
+    return (
+      <ErrorMessage>
+        <div>존재하지 않는 상품입니다.</div>
+      </ErrorMessage>
+    );
   }
   return (
     <>
@@ -34,6 +38,7 @@ export const getServerSideProps: GetServerSideProps<Props, { id: string }> = asy
     price: 0,
     error: false,
   };
+
   if (res.error) {
     const index = parseInt(id);
     if (index && index <= products.length) {
@@ -55,7 +60,12 @@ interface Props extends Product {
   error: boolean;
 }
 
-const ErrorMessage = styled.div``;
+const ErrorMessage = styled.div`
+  display: flex;
+  height: calc(100vh - 200px);
+  align-items: center;
+  justify-content: center;
+`;
 
 const Thumbnail = styled.img`
   width: 100%;
