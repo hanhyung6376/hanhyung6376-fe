@@ -39,7 +39,7 @@ const usePagination = (totalPage: number) => {
         ),
       });
     }
-  }, [page]);
+  }, [page, totalPage]);
 
   return { page, pagination, onNext, onPrev, onClick };
 };
