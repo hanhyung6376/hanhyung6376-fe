@@ -14,7 +14,7 @@ const usePagination = (totalPage: number) => {
 
   const onPrev = () => {
     const { pageRange } = pagination;
-    setPage(pageRange[0] - PAGE_RANGE);
+    setPage(pageRange[0] - 1);
   };
 
   const onClick = (value: number) => {
