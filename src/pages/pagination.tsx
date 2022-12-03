@@ -26,7 +26,9 @@ const PaginationPage: NextPage = () => {
     } else {
       const { products, totalCount } = res.data.data;
       setData(products);
-      setTotal(Math.ceil(totalCount / 10));
+      if (total !== Math.ceil(totalCount / 10)) {
+        setTotal(Math.ceil(totalCount / 10));
+      }
       setError(false);
     }
   };
