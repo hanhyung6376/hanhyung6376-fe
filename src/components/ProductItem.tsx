@@ -1,24 +1,34 @@
 import styled from 'styled-components';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useRecoilState } from 'recoil';
+import { useRouter } from 'next/router';
 import { Product } from '../types/product';
 import { numberFormatter } from '../utilities/product';
+import { infiniteAtom } from '../store';
 
 type ProductItemProps = {
   product: Product;
 };
 
-const ProductItem = ({ product: { name, thumbnail, price, id } }: ProductItemProps) => (
-  <Link href={`/products/${id}`}>
-    <Container>
+const ProductItem = ({ product: { name, thumbnail, price, id } }: ProductItemProps) => {
+  const router = useRouter();
+  const [infinite, setInfinite] = useRecoilState(infiniteAtom);
+
+  const onClick = () => {
+    setInfinite({ ...infinite, scroll: window.scrollY, back: true });
+    router.push(`/products/${id}`);
+  };
+  return (
+    <Container onClick={onClick}>
       <Thumbnail>
         <Image src={thumbnail ? thumbnail : '/defaultThumbnail.jpg'} layout='fill' alt='image' />
       </Thumbnail>
       <Name>{name}</Name>
       <Price>{numberFormatter(price)}</Price>
     </Container>
-  </Link>
-);
+  );
+};
 
 export default ProductItem;
 
