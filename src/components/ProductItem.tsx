@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import Link from 'next/link';
-
+import Image from 'next/image';
 import { Product } from '../types/product';
 import { numberFormatter } from '../utilities/product';
 
@@ -11,7 +11,9 @@ type ProductItemProps = {
 const ProductItem = ({ product: { name, thumbnail, price, id } }: ProductItemProps) => (
   <Link href={`/products/${id}`}>
     <Container>
-      <Thumbnail src={thumbnail ? thumbnail : '/defaultThumbnail.jpg'} />
+      <Thumbnail>
+        <Image src={thumbnail ? thumbnail : '/defaultThumbnail.jpg'} layout='fill' alt='image' />
+      </Thumbnail>
       <Name>{name}</Name>
       <Price>{numberFormatter(price)}</Price>
     </Container>
@@ -26,7 +28,8 @@ const Container = styled.a`
   margin-top: 20px;
 `;
 
-const Thumbnail = styled.img`
+const Thumbnail = styled.div`
+  position: relative;
   width: 100%;
   height: 180px;
 `;
