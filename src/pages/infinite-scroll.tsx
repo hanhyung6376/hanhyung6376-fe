@@ -1,30 +1,33 @@
-import Link from 'next/link';
 import type { NextPage } from 'next';
 import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import ProductList from '../components/ProductList';
 import useInfiniteScroll from 'hooks/useInfiniteScroll';
 import * as api from 'api';
-import { Product } from '../types/product';
+import { useRecoilState, useResetRecoilState } from 'recoil';
+import { infiniteAtom } from '../store';
 
 const NUMBER = 16;
 
 const InfiniteScrollPage: NextPage = () => {
-  const [page, setPage] = useState(1);
-  const [data, setData] = useState<Product[]>([]);
+  const [infinite, setInfinite] = useRecoilState(infiniteAtom);
+  const reset = useResetRecoilState(infiniteAtom);
   const [total, setTotal] = useState();
   const [hasNext, setHasNext] = useState(true);
   const fetchMoreEl = useRef(null);
   const intersecting = useInfiniteScroll(fetchMoreEl);
 
   const fetchData = async () => {
-    const res = await api.getProducts({ page, size: NUMBER });
+    const res = await api.getProducts({ page: infinite.page, size: NUMBER });
     const { products, totalCount } = res.data.data;
-    setData([...data, ...products]);
+    setInfinite({
+      ...infinite,
+      product: [...infinite.product, ...products],
+      page: infinite.page + 1,
+    });
     if (!total) {
       setTotal(totalCount);
     }
-    setPage(page + 1);
   };
 
   useEffect(() => {
@@ -34,14 +37,23 @@ const InfiniteScrollPage: NextPage = () => {
   }, [intersecting]);
 
   useEffect(() => {
-    if (data.length === total) {
+    if (infinite.product.length === total) {
       setHasNext(false);
     }
-  }, [data]);
+  }, [infinite.product]);
+
+  useEffect(() => {
+    if (infinite.back) {
+      window.scrollTo(0, infinite.scroll);
+      setInfinite({ ...infinite, back: false });
+    } else {
+      reset();
+    }
+  }, []);
 
   return (
     <Container>
-      <ProductList products={data} />
+      <ProductList products={infinite.product} />
       <div ref={fetchMoreEl} />
     </Container>
   );
