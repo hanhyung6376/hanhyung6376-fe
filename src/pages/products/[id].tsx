@@ -39,7 +39,7 @@ export const getServerSideProps: GetServerSideProps<Props, { id: string }> = asy
   if (res.error) {
     const index = parseInt(id);
     if (index && index <= products.length) {
-      result = { ...products[index], error: false };
+      result = { ...products[index - 1], error: false };
     } else {
       result = { ...result, error: true };
     }
