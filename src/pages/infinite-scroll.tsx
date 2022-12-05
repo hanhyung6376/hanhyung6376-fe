@@ -1,17 +1,15 @@
 import type { NextPage } from 'next';
-import { useRouter } from 'next/router';
 import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
-import ProductList from '../components/ProductList';
+import ProductList from 'components/ProductList';
 import useInfiniteScroll from 'hooks/useInfiniteScroll';
 import * as api from 'api';
 import { useRecoilState, useResetRecoilState } from 'recoil';
-import { infiniteAtom } from '../store';
+import { infiniteAtom } from 'store';
 
 const NUMBER = 16;
 
 const InfiniteScrollPage: NextPage = () => {
-  const router = useRouter();
   const [infinite, setInfinite] = useRecoilState(infiniteAtom);
   const reset = useResetRecoilState(infiniteAtom);
   const [total, setTotal] = useState();
@@ -45,6 +43,7 @@ const InfiniteScrollPage: NextPage = () => {
   }, [infinite.product]);
 
   useEffect(() => {
+    console.log(infinite);
     if (infinite.popState) {
       window.scrollTo(0, infinite.scroll);
       setInfinite({ ...infinite, popState: false });
@@ -52,6 +51,8 @@ const InfiniteScrollPage: NextPage = () => {
       reset();
     }
   }, []);
+
+  console.log(infinite);
 
   return (
     <Container>
