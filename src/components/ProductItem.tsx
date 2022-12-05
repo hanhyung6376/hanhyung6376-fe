@@ -38,7 +38,7 @@ const ProductItem = ({ product: { name, thumbnail, price, id } }: ProductItemPro
 
 export default ProductItem;
 
-const Container = styled.a`
+const Container = styled.li`
   width: 180px;
   margin-left: 20px;
   margin-top: 20px;

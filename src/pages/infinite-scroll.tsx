@@ -43,7 +43,6 @@ const InfiniteScrollPage: NextPage = () => {
   }, [infinite.product]);
 
   useEffect(() => {
-    console.log(infinite);
     if (infinite.popState) {
       window.scrollTo(0, infinite.scroll);
       setInfinite({ ...infinite, popState: false });
@@ -51,8 +50,6 @@ const InfiniteScrollPage: NextPage = () => {
       reset();
     }
   }, []);
-
-  console.log(infinite);
 
   return (
     <Container>
@@ -64,7 +61,7 @@ const InfiniteScrollPage: NextPage = () => {
 
 export default InfiniteScrollPage;
 
-const Container = styled.div`
+const Container = styled.main`
   display: flex;
   flex-direction: column;
   align-items: center;

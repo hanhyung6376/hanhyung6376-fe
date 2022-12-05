@@ -29,7 +29,7 @@ const Layout: FC<PropsWithChildren<any>> = ({ children }) => {
 
 export default Layout;
 
-const Header = styled.div`
+const Header = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;

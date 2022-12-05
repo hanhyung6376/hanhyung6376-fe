@@ -18,7 +18,7 @@ const HomePage: NextPage = () => {
 
 export default HomePage;
 
-const Container = styled.div`
+const Container = styled.main`
   display: flex;
   flex-direction: column;
   justify-content: center;
