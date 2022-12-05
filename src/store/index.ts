@@ -21,8 +21,8 @@ export const infiniteAtom = atom<Infinite>({
   default: {
     scroll: 0,
     page: 1,
-    back: false,
     product: [],
+    popState: false,
   },
 });
 
@@ -34,7 +34,7 @@ interface User {
 
 interface Infinite {
   scroll: number;
-  back: boolean;
   product: Product[];
   page: number;
+  popState: boolean;
 }
