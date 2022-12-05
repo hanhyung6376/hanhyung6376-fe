@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useRecoilState } from 'recoil';
-import { pageAtom } from '../store';
+import { pageAtom } from 'store';
 
 const PAGE_RANGE = 5;
 

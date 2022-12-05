@@ -1,7 +1,7 @@
 import { useRecoilState } from 'recoil';
 import { userAtom } from 'store';
 import * as api from 'api';
-import { LoginProps } from '../types/auth';
+import { LoginProps } from 'types/auth';
 import { useRouter } from 'next/router';
 
 const useAuth = () => {

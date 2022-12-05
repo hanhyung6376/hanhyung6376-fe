@@ -4,8 +4,8 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
 import useInput from 'hooks/useInput';
-import LoginInput from '../components/LoginInput';
-import useAuth from '../hooks/useAuth';
+import LoginInput from 'components/LoginInput';
+import useAuth from 'hooks/useAuth';
 import { checkId, checkPassword } from 'utilities/auth';
 
 const LoginPage: NextPage = () => {

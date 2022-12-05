@@ -2,13 +2,13 @@ import type { NextPage } from 'next';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
-import ProductList from '../components/ProductList';
-import Pagination from '../components/Pagination';
+import ProductList from 'components/ProductList';
+import Pagination from 'components/Pagination';
 import Error from 'components/common/Error';
 import { useRecoilState } from 'recoil';
-import { pageAtom } from '../store';
-import * as api from '../api';
-import { Product } from '../types/product';
+import { pageAtom } from 'store';
+import * as api from 'api';
+import { Product } from 'types/product';
 
 const PaginationPage: NextPage = () => {
   const router = useRouter();

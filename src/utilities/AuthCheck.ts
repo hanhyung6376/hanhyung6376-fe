@@ -1,6 +1,6 @@
 import { useEffect, PropsWithChildren } from 'react';
 import { useRecoilState } from 'recoil';
-import { userAtom } from '../store';
+import { userAtom } from 'store';
 
 const AuthCheck = ({ children }: PropsWithChildren<any>) => {
   const [, setUser] = useRecoilState(userAtom);
