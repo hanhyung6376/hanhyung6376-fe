@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import Link from 'next/link';
 import Image from 'next/image';
 import { useRecoilState } from 'recoil';
 import { useRouter } from 'next/router';
@@ -14,9 +13,12 @@ type ProductItemProps = {
 const ProductItem = ({ product: { name, thumbnail, price, id } }: ProductItemProps) => {
   const router = useRouter();
   const [infinite, setInfinite] = useRecoilState(infiniteAtom);
-
+  router.beforePopState((state) => {
+    setInfinite({ ...infinite, popState: true });
+    return true;
+  });
   const onClick = () => {
-    setInfinite({ ...infinite, scroll: window.scrollY, back: true });
+    setInfinite({ ...infinite, scroll: window.scrollY });
     router.push(`/products/${id}`);
   };
   return (
