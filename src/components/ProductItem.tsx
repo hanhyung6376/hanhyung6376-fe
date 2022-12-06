@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { useEffect } from 'react';
 import Image from 'next/image';
 import { useRecoilState } from 'recoil';
 import { useRouter } from 'next/router';
@@ -28,7 +27,11 @@ const ProductItem = ({ product: { name, thumbnail, price, id } }: ProductItemPro
   return (
     <Container onClick={onClick}>
       <Thumbnail>
-        <Image src={thumbnail ? thumbnail : '/defaultThumbnail.jpg'} layout='fill' alt='image' />
+        <Image
+          src={thumbnail ? thumbnail : '/defaultThumbnail.jpg'}
+          layout='fill'
+          alt='제품 이미지'
+        />
       </Thumbnail>
       <Name>{name}</Name>
       <Price>{numberFormatter(price)}</Price>
