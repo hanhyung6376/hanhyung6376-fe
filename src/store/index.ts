@@ -7,7 +7,7 @@ export const userAtom = atom<User>({
   default: {
     name: null,
     accessToken: null,
-    login: false,
+    id: null,
   },
 });
 
@@ -29,7 +29,7 @@ export const infiniteAtom = atom<Infinite>({
 interface User {
   name: string | null;
   accessToken: string | null;
-  login: boolean;
+  id: string | null;
 }
 
 interface Infinite {
