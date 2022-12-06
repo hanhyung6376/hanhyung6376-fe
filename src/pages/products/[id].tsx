@@ -1,5 +1,6 @@
 import type { NextPage, GetServerSideProps } from 'next';
 import React from 'react';
+import Image from 'next/image';
 import styled from 'styled-components';
 import Error from 'components/common/Error';
 import * as api from 'api';
@@ -13,7 +14,13 @@ const ProductDetailPage: NextPage<Props> = ({ thumbnail, name, price, error }) =
   }
   return (
     <>
-      <Thumbnail src={thumbnail ? thumbnail : '/defaultThumbnail.jpg'} alt='제품 이미지' />
+      <Thumbnail>
+        <Image
+          src={thumbnail ? thumbnail : '/defaultThumbnail.jpg'}
+          layout='fill'
+          alt='제품 이미지'
+        />
+      </Thumbnail>
       <ProductInfoWrapper>
         <Name>{name}</Name>
         <Price>{numberFormatter(price)}원</Price>
@@ -57,7 +64,8 @@ interface Props extends Product {
   error: boolean;
 }
 
-const Thumbnail = styled.img`
+const Thumbnail = styled.div`
+  position: relative;
   width: 100%;
   height: 420px;
 `;
