@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import type { NextPage } from 'next';
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
