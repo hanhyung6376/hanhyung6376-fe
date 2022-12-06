@@ -1,8 +1,10 @@
 import type { AppProps } from 'next/app';
 import styled from 'styled-components';
-
-import setupMSW from '../api/setup';
-import GlobalStyle from '../styles/GlobalStyle';
+import { RecoilRoot } from 'recoil';
+import setupMSW from 'api/setup';
+import GlobalStyle from 'styles/GlobalStyle';
+import Layout from 'layout/Layout';
+import AuthCheck from 'utilities/AuthCheck';
 
 setupMSW();
 
@@ -12,7 +14,13 @@ function MyApp({ Component, pageProps }: AppProps) {
       <GlobalStyle />
       <Background />
       <Content>
-        <Component {...pageProps} />
+        <RecoilRoot>
+          <AuthCheck>
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+          </AuthCheck>
+        </RecoilRoot>
       </Content>
     </>
   );

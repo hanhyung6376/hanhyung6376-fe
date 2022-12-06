@@ -1,49 +1,56 @@
-import { useRouter } from 'next/router';
-import Link from 'next/link';
 import type { NextPage } from 'next';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-
-import products from '../api/data/products.json';
-import ProductList from '../components/ProductList';
-import Pagination from '../components/Pagination';
+import { useRouter } from 'next/router';
+import ProductList from 'components/ProductList';
+import Pagination from 'components/Pagination';
+import Error from 'components/common/Error';
+import * as api from 'api';
+import { Product } from 'types/product';
+import { queryStringToNumber } from '../utilities';
 
 const PaginationPage: NextPage = () => {
   const router = useRouter();
-  const { page } = router.query;
+  const page = queryStringToNumber(router.query.page);
+  const [error, setError] = useState(false);
+  const [data, setData] = useState<Product[]>([]);
+  const [total, setTotal] = useState<number>(0);
 
+  const fetchData = async (value: number) => {
+    const res = await api.getProducts({ page: value, size: 10 });
+
+    if (res.error) {
+      setError(true);
+    } else {
+      const { products, totalCount } = res.data.data;
+      setData(products);
+      if (total !== Math.ceil(totalCount / 10)) {
+        setTotal(Math.ceil(totalCount / 10));
+      }
+      setError(false);
+    }
+  };
+
+  useEffect(() => {
+    if (page) {
+      fetchData(page);
+    }
+  }, [page]);
+
+  if (error) {
+    return <Error message='존재하지 않는 페이지입니다.' />;
+  }
   return (
-    <>
-      <Header>
-        <Link href='/'>
-          <Title>HAUS</Title>
-        </Link>
-        <Link href='/login'>
-          <p>login</p>
-        </Link>
-      </Header>
-      <Container>
-        <ProductList products={products.slice(0, 10)} />
-        <Pagination />
-      </Container>
-    </>
+    <Container>
+      <ProductList products={data} />
+      <Pagination totalPage={total} />
+    </Container>
   );
 };
 
 export default PaginationPage;
 
-const Header = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px;
-`;
-
-const Title = styled.a`
-  font-size: 48px;
-`;
-
-const Container = styled.div`
+const Container = styled.main`
   display: flex;
   flex-direction: column;
   align-items: center;
