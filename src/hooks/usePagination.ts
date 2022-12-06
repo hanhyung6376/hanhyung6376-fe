@@ -1,7 +1,5 @@
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
-import { useRecoilState } from 'recoil';
-import { pageAtom } from 'store';
 import { queryStringToNumber } from '../utilities';
 
 const PAGE_RANGE = 5;
