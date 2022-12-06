@@ -64,7 +64,7 @@ const LoginPage: NextPage = () => {
   }, [error, input]);
 
   useEffect(() => {
-    if (user.login) {
+    if (user.id) {
       router.push('/');
     }
   }, [user]);

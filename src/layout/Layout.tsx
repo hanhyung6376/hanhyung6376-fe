@@ -11,7 +11,7 @@ const Layout: FC<PropsWithChildren<any>> = ({ children }) => {
         <Link href='/'>
           <Title>HAUS</Title>
         </Link>
-        {user.login ? (
+        {user.name ? (
           <Wrapper>
             <p>{user.name}</p>
             <p onClick={onLogout}>logout</p>
