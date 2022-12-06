@@ -9,28 +9,23 @@ const useAuth = () => {
   const [user, setUser] = useRecoilState(userAtom);
 
   const onLogin = async ({ id, password }: LoginProps) => {
-    const verification = await api.verificationUser(id);
-
-    if (verification.error) {
-      return;
-    }
     const login = await api.login({ id, password });
     if (login.data) {
       const {
         data: {
-          user: { NAME },
+          user: { NAME, ID },
           accessToken,
         },
       } = login.data;
-      setUser({ name: NAME, login: true, accessToken });
-      sessionStorage.setItem('auth', JSON.stringify({ accessToken, name: NAME }));
+      setUser({ name: NAME, id: ID, accessToken });
+      sessionStorage.setItem('auth', JSON.stringify({ accessToken, name: NAME, id: ID }));
       router.push('/');
       return true;
     }
   };
 
   const onLogout = () => {
-    setUser({ name: null, login: false, accessToken: null });
+    setUser({ name: null, id: null, accessToken: null });
     sessionStorage.removeItem('auth');
   };
 
