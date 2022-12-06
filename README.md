@@ -60,4 +60,6 @@ pagination, infinite-scroll 페이지 같은 경우 리스트이기 때문에 ul
 ### 7) etc
 - SEO 최적화
   - lighthouse를 이용하여 SEO 최적화 작업을 진행하였습니다.
+- SSR styled components 깜빡임
+  - _documents.tsx 와 bable plugin 을 이용하여 해결
 
