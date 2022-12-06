@@ -5,21 +5,19 @@ import { useRouter } from 'next/router';
 import ProductList from 'components/ProductList';
 import Pagination from 'components/Pagination';
 import Error from 'components/common/Error';
-import { useRecoilState } from 'recoil';
-import { pageAtom } from 'store';
 import * as api from 'api';
 import { Product } from 'types/product';
+import { queryStringToNumber } from '../utilities';
 
 const PaginationPage: NextPage = () => {
   const router = useRouter();
-  const params = router.query.page;
-  const [page, setPage] = useRecoilState(pageAtom);
+  const page = queryStringToNumber(router.query.page);
   const [error, setError] = useState(false);
   const [data, setData] = useState<Product[]>([]);
   const [total, setTotal] = useState<number>(0);
 
-  const fetchData = async () => {
-    const res = await api.getProducts({ page, size: 10 });
+  const fetchData = async (value: number) => {
+    const res = await api.getProducts({ page: value, size: 10 });
 
     if (res.error) {
       setError(true);
@@ -34,17 +32,8 @@ const PaginationPage: NextPage = () => {
   };
 
   useEffect(() => {
-    const number = Number(params as string);
-    if (Number.isInteger(number)) {
-      setPage(number);
-    } else {
-      setError(true);
-    }
-  }, [params]);
-
-  useEffect(() => {
-    if (page > 0) {
-      fetchData();
+    if (page) {
+      fetchData(page);
     }
   }, [page]);
 
