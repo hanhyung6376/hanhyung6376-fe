@@ -6,10 +6,10 @@ import styled from 'styled-components';
 const HomePage: NextPage = () => {
   return (
     <Container>
-      <Link href='/pagination?page=1'>
+      <Link href='/pagination?page=1' passHref>
         <StyledLink>pagination</StyledLink>
       </Link>
-      <Link href='/infinite-scroll'>
+      <Link href='/infinite-scroll' passHref>
         <StyledLink>infinite scroll</StyledLink>
       </Link>
     </Container>
