@@ -1,33 +1,46 @@
+import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 import { pageAtom } from 'store';
+import { queryStringToNumber } from '../utilities';
 
 const PAGE_RANGE = 5;
 
 const usePagination = (totalPage: number) => {
-  const [page, setPage] = useRecoilState(pageAtom);
+  const router = useRouter();
+  const page = queryStringToNumber(router.query.page);
+
   const [pagination, setPagination] = useState<Pagination>({
     prev: false,
     next: false,
     pageRange: [],
   });
 
+  const routerPush = (value: number) => {
+    router.push({
+      pathname: '/pagination',
+      query: {
+        page: value,
+      },
+    });
+  };
+
   const onPrev = () => {
     const { pageRange } = pagination;
-    setPage(pageRange[0] - 1);
+    routerPush(pageRange[0] - 1);
   };
 
   const onClick = (value: number) => {
-    setPage(value);
+    routerPush(value);
   };
 
   const onNext = () => {
     const { pageRange } = pagination;
-    setPage(pageRange[PAGE_RANGE - 1] + 1);
+    routerPush(pageRange[PAGE_RANGE - 1] + 1);
   };
 
   useEffect(() => {
-    if (!pagination.pageRange.includes(page)) {
+    if (page && !pagination.pageRange.includes(page)) {
       const startIndex = Math.floor((page - 1) / PAGE_RANGE) * PAGE_RANGE + 1;
       const endIndex = startIndex + PAGE_RANGE - 1;
       setPagination({
