@@ -11,11 +11,6 @@ export const userAtom = atom<User>({
   },
 });
 
-export const pageAtom = atom<number>({
-  key: `page/${v1()}`,
-  default: 0,
-});
-
 export const infiniteAtom = atom<Infinite>({
   key: `scroll/${v1()}`,
   default: {
