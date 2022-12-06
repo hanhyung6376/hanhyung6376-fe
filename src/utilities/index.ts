@@ -11,3 +11,15 @@ export const parseQueryString = (search: string): Record<string, string> =>
 
       return acc;
     }, {} as Record<string, string>);
+
+export const queryStringToNumber = (qs: string | string[] | undefined) => {
+  if (!qs) return null;
+
+  const number = Number(qs as string);
+
+  if (Number.isInteger(number) && number >= 1) {
+    return number;
+  } else {
+    return null;
+  }
+};
