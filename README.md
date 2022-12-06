@@ -56,6 +56,8 @@ pagination, infinite-scroll 페이지 같은 경우 리스트이기 때문에 ul
 - 상품 상세 이동 후 이전 페이지로 돌아올 시 기존의 위치로 이동
   - next js의 router.beforePopState를 이용하여 구현하였습니다.
   - 데이터는 전역변수로 관리하여 상품상세페이지에서 무한 스크롤 페이지로 이동시 전역 상태 관리를 통해 복원하도록 하였습니다.
+- lazy loading
+  - next js의 image를 이용하여 lazy loading을 적용하였습니다.
 
 ### 7) etc
 - SEO 최적화
