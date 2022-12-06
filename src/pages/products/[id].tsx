@@ -12,13 +12,13 @@ const ProductDetailPage: NextPage<Props> = ({ thumbnail, name, price, error }) =
     return <Error message='존재하지 않는 상풉니다.' />;
   }
   return (
-    <Container>
-      <Thumbnail src={thumbnail ? thumbnail : '/defaultThumbnail.jpg'} />
+    <>
+      <Thumbnail src={thumbnail ? thumbnail : '/defaultThumbnail.jpg'} alt='제품 이미지' />
       <ProductInfoWrapper>
         <Name>{name}</Name>
         <Price>{numberFormatter(price)}원</Price>
       </ProductInfoWrapper>
-    </Container>
+    </>
   );
 };
 
@@ -56,7 +56,6 @@ export const getServerSideProps: GetServerSideProps<Props, { id: string }> = asy
 interface Props extends Product {
   error: boolean;
 }
-const Container = styled.main``;
 
 const Thumbnail = styled.img`
   width: 100%;
